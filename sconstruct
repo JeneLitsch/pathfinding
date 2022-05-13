@@ -1,0 +1,41 @@
+def glob(dirs):
+	files = []
+	for dir in dirs:
+		files.append(Glob(dir + "/*.cxx"))
+	return files
+
+flags = [
+	"-std=c++2a",
+	"-Wall",
+	"-Wextra",
+	"-Wconversion",
+	"-Wunreachable-code",
+	"-Wuninitialized",
+	"-pedantic-errors",
+	"-Wold-style-cast",
+	"-Wno-error=unused-variable"
+]
+
+comp = [
+	"test",
+	"minos",
+]
+
+incl = [
+	".",
+	"test",
+	"libs/stdxx",
+]
+
+env = Environment(
+	CXX = "clang++-14",
+	CXXFLAGS = flags,
+	CPPPATH = incl,
+	CPPDEFINES = [],
+	LIBS = [],
+	LIBPATH = ".",
+	SCONS_CXX_STANDART="c++20",
+	CXXCOMSTR = "[Compiling] $TARGET",
+	LINKCOMSTR = "[Linking] $TARGET")
+
+env.Program('bin/minos', glob(comp))
